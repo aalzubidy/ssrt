@@ -1,0 +1,121 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema aalzubid_ssrt
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema aalzubid_ssrt
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `aalzubid_ssrt` DEFAULT CHARACTER SET utf8 ;
+USE `aalzubid_ssrt` ;
+
+-- -----------------------------------------------------
+-- Table `aalzubid_ssrt`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `aalzubid_ssrt`.`user` (
+  `userName` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  `userEmail` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  `userPassword` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  PRIMARY KEY (`userEmail`),
+  UNIQUE INDEX `user_email_UNIQUE` (`userEmail` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `aalzubid_ssrt`.`query`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `aalzubid_ssrt`.`query` (
+  `queryId` INT(11) NOT NULL AUTO_INCREMENT,
+  `queryQuery` VARCHAR(500) CHARACTER SET 'utf8' NOT NULL,
+  `queryDB` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
+  `queryUser` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  `queryDownload` INT(11) NOT NULL,
+  `queryDate` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
+  `queryTotalResults` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `queryURL` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  PRIMARY KEY (`queryId`),
+  UNIQUE INDEX `query_id_UNIQUE` (`queryId` ASC),
+  INDEX `query_user_user_idx` (`queryUser` ASC),
+  CONSTRAINT `queryUserUser`
+    FOREIGN KEY (`queryUser`)
+    REFERENCES `aalzubid_ssrt`.`user` (`userEmail`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `aalzubid_ssrt`.`publication`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `aalzubid_ssrt`.`publication` (
+  `publicationID` INT(11) NOT NULL AUTO_INCREMENT,
+  `publicationQueryID` INT(11) NULL DEFAULT NULL,
+  `type` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `author` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `editor` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `title` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `booktitle` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `year` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `publisher` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `address` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `pages` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `isbn` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `doi` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `url` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `journal` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `volume` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `abstract` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `issn` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `location` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `keywords` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `month` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  PRIMARY KEY (`publicationID`),
+  UNIQUE INDEX `publicationID_UNIQUE` (`publicationID` ASC),
+  INDEX `PublicationQueryID_idx` (`publicationQueryID` ASC),
+  CONSTRAINT `PublicationQueryID`
+    FOREIGN KEY (`publicationQueryID`)
+    REFERENCES `aalzubid_ssrt`.`query` (`queryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `aalzubid_ssrt`.`queryconverter`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `aalzubid_ssrt`.`queryconverter` (
+  `qcId` INT(11) NOT NULL AUTO_INCREMENT,
+  `qcInputQuery` VARCHAR(500) CHARACTER SET 'utf8' NOT NULL,
+  `qcOutputQuery` TEXT CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `qcUser` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `qcDate` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  PRIMARY KEY (`qcId`),
+  UNIQUE INDEX `qcId_UNIQUE` (`qcId` ASC),
+  INDEX `qcUserUser_idx` (`qcUser` ASC),
+  CONSTRAINT `qcUserUser`
+    FOREIGN KEY (`qcUser`)
+    REFERENCES `aalzubid_ssrt`.`user` (`userEmail`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

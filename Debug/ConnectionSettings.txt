@@ -1,0 +1,8 @@
+@serverName=localhost
+@databaseName=aalzubid_ssrt
+@userName=root
+@password=
+
+# Replace the values above with the values of your local or remote database. (Local database will increase the speed drastically).
+# The dafault settings for SSRT remote database if you want to use it, set everything to ssrt.
+# If you have any questions, do not hesitate to ask me. aalzubidy@crimson.ua.edu
