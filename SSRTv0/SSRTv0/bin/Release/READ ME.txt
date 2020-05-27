@@ -1,0 +1,6 @@
+SSRT v0.1
+By: Ahmed Al-Zubidy - aalzubidy@crimson.ua.edu
+Feburary 5, 2017
+
+This software have been designed and built as part of PhD dessertation at the University of Alabama.
+Please do not change or alter this software without a written permission.
